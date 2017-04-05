@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { ListReducer } from './reducers/list';
-import App from './App';
+import ReduxApp from './ReduxApp';
+import AppContainer from './AppContainer';
+import MobxApp from './MobxApp';
+import ListStore from './mobx/listStore';
 import './index.css';
+
+let mobxStore = new ListStore();
 
 let reducers = combineReducers({
   list: ListReducer
@@ -12,8 +17,13 @@ let reducers = combineReducers({
 let appStore = createStore(reducers);
 
 ReactDOM.render(
-  <Provider store={appStore}>
-    <App />
-  </Provider>,
+  <div>
+    <AppContainer>
+      <Provider store={appStore}>
+        <ReduxApp />
+      </Provider>
+      <MobxApp store={mobxStore}/>
+    </AppContainer>
+  </div>,
   document.getElementById('root')
 );
